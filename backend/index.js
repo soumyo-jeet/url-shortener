@@ -37,7 +37,7 @@ app.use('/', require('./routes/redirect'));
 // Test endpoint
 app.get('/api/test-db', async (req, res) => {
   try {
-    const count = await require('./models/Url').countDocuments();
+    const count = await require('./model/url').countDocuments();
     res.json({ dbConnected: true, count });
   } catch (err) {
     res.json({ dbConnected: false, error: err.message });
