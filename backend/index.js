@@ -12,6 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.get('/', (req, res) => res.status(200).send("Server is running..."))
 app.use('/api/urls', require('./routes/urls'));
 app.use('/', require('./routes/redirect'));
 connectToMongo();
