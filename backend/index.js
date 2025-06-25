@@ -14,13 +14,13 @@ app.use(express.json());
 // Routes
 app.use('/api/urls', require('./routes/urls'));
 app.use('/', require('./routes/redirect'));
+connectToMongo();
 
 // Export for Vercel
 module.exports = app;
 
 // Local development
 if (require.main === module) {
-  connectToMongo();
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
