@@ -10,13 +10,14 @@ router.get('/:shortUrl', async(req, res) => {
     
     try {
         const link = await url.findOne({ shortUrl: shortUrl })
-        if(!link) res.status(404).send("Url not found.")
+        //if(!link) res.status(404).send("Url not found.")
             
         const devices = await parse.parseDevice().toString()
         const device = ( devices === "Other" ) ? "Desktop" : devices
         
         const response = await fetch("https://ipapi.co/json")
         const { city, country_name } = await response.json()
+
 
         const clickdtls = new click ({
             device: device,
@@ -33,6 +34,7 @@ router.get('/:shortUrl', async(req, res) => {
         res.redirect(link.actualUrl)   
     } catch (error) {
         res.status(500).json(error)
+        console.log(error)
     }
 })
 
