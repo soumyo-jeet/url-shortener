@@ -5,24 +5,24 @@ const parse = require('ua-parser')
 
 const router = express.Router()
 
-router.get('/:shortUrl', async(req, res) => {
+
+router.get('/:shortUrl', async (req, res) => {
     const shortUrl = req.params.shortUrl
-    
+
     try {
         const link = await url.findOne({ shortUrl: shortUrl })
-        //if(!link) res.status(404).send("Url not found.")
-            
+        if(!link) return res.status(404).send("Url not found.")
+
         const devices = await parse.parseDevice().toString()
-        const device = ( devices === "Other" ) ? "Desktop" : devices
-        
-        const response = await fetch("https://ipapi.co/json")
-        const { city, country_name } = await response.json()
+        const device = (devices === "Other") ? "Desktop" : devices
 
+        const response = await fetch("https://ipwho.is/");
+        const { city, country } = await response.json();
 
-        const clickdtls = new click ({
+        const clickdtls = new click({
             device: device,
             city: city,
-            country: country_name,
+            country: country,
             time: Date.now()
         })
 
@@ -31,7 +31,7 @@ router.get('/:shortUrl', async(req, res) => {
 
         link.clicks.push(clickId)
         await link.save()
-        res.redirect(link.actualUrl)   
+        res.redirect(link.actualUrl)
     } catch (error) {
         res.status(500).json(error)
         console.log(error)
