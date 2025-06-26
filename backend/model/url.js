@@ -19,9 +19,13 @@ const urlSchema = new Schema ({
         unique: true
     },
 
-    totalClicks : [{
-        type: Date,
-        required: true
+    qr: {
+        type: String
+    },
+
+    clicks : [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Click'
     }]
 })
 

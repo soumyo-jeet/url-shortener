@@ -8,26 +8,12 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Enhanced CORS
-app.use(cors({
-  origin: ['https://url-shortener-three-mauve.vercel.app', 'http://localhost:8000'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE']
-}));
+app.use(cors());
 
 app.use(express.json());
 
-// Database connection middleware
-let dbConnected = false;
-const startServer = async () => {
-  if (!dbConnected) {
-    await connectToMongo();
-    dbConnected = true;
-  }
-};
-
-app.use(async (req, res, next) => {
-  await startServer();
-  next();
-});
+// Database connection
+connectToMongo()
 
 // Routes
 app.get('/', (req, res) => res.status(200).send("Server is running..."));
@@ -44,8 +30,10 @@ app.get('/api/test-db', async (req, res) => {
   }
 });
 
+// vercel
 module.exports = app;
 
+//localhost
 if (require.main === module) {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

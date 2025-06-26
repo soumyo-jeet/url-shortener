@@ -17,6 +17,8 @@
     "express-validator": "^7.2.1",
     "mongodb": "^6.17.0",
     "mongoose": "^8.16.0",
-    "nodemon": "^3.1.10"
+    "nodemon": "^3.1.10",
+    "ua-parser": "^0.3.5",
+    "ua-parser-js": "^2.0.4"
   }
 }

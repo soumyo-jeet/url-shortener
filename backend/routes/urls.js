@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 
 router.get('/allUrls', async (req, res) => {
     try {
-        const allUrls = await url.find({})
+        const allUrls = await url.find({}).populate("clicks")
         res.status(200).json(allUrls)
 
     } catch (error) {

@@ -1,5 +1,8 @@
 const mongoose = require ('mongoose')
-const mongoUri = "mongodb+srv://samajdarsoumyajeet0:nbpDse54w13Zk0Ie@cluster0.r7zk3uj.mongodb.net/url-shortener?retryWrites=true&w=majority&appName=Cluster0"
+const dotenv = require('dotenv')
+
+dotenv.config()
+const mongoUri = process.env.MONGO_URI
 
 const connectToMongo = () => {
     mongoose.connect(mongoUri)
