@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 8000;
 
 // Enhanced CORS
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "https://url-shortener-ktxu.vercel.app"],
   credentials: true
 }));
 
