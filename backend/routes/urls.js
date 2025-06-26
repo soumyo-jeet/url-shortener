@@ -10,6 +10,7 @@ router.post('/', async (req, res) => {
     try {
         // generating shortId
         const shortId = Math.random().toString(36).substring(2, 10)
+
         const shortUrl = process.env.BACKEND_ENDPOINT + shortId
         const opts = {
             errorCorrectionLevel: 'H',
@@ -44,7 +45,7 @@ router.post('/', async (req, res) => {
         })
 
         await newUrl.save();
-        res.status(200).send("Successfully created")
+        res.status(200).json({ flag: "Successfully created"})
     } catch (error) {
         res.status(500).send("Create shortUrl error")
     }
@@ -61,13 +62,13 @@ router.get('/allUrls', async (req, res) => {
     }
 })
 
-router.get('/savedUrl', async (req, res) => {
+router.post('/savedUrl', async (req, res) => {
     const { link } = await req.body
     if (!link) res.status(400).send("Bad request")
     try {
-        const savedUrl = await url.find({ actualUrl: link })
-        res.status(200).json(savedUrl)
+        const savedUrl = await url.findOne({ actualUrl: link })
         if (!savedUrl) res.status(404).json("Not Found")
+        res.status(200).json(savedUrl)
     } catch (error) {
         console.log(error)
         res.status(500).send(error)

@@ -5,7 +5,6 @@ const { Schema } = mongoose
 const urlSchema = new Schema ({
     title : {
         type: String,
-        required: true
     },
 
     actualUrl : {
