@@ -1,4 +1,5 @@
 "use client"
+import CardLoader from "@/components/cardLoader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -108,7 +109,6 @@ export default function Home() {
         findres = await findUrl()
       }
       const data = await findres.json()
-      console.log(data)
       seturlDtls(data)
     } catch (error) {
       seterror("Something went wrong")
@@ -172,7 +172,7 @@ export default function Home() {
         {/* Results Section */}
         <div className="grid gap-6 max-w-4xl mx-auto">
           {
-            isLoading ? <h1>Loading...</h1> : (
+            isLoading ? <CardLoader /> : (
               urlDtls && (
                 <Card className="shadow-lg">
                   <CardHeader>
@@ -214,6 +214,14 @@ export default function Home() {
                             {urlDtls?.clicks?.length || 0}
                           </span>
                         </div>
+                        {
+                          (urlDtls?.clicks?.length  > 0) && (
+                            <p className="text-sm text-gray-500">Last clicked on
+                              <span className="font-medium text-gray-700"> {new Date(urlDtls?.clicks?.slice(-1)[0]?.time)?.toDateString()}</span>
+                            </p>
+                          )
+                        }
+
                       </div>
 
                       {/* QR Code */}
@@ -235,6 +243,7 @@ export default function Home() {
                         </Button>
                       </div>
                     </div>
+
                   </CardContent>
                 </Card>
               )
