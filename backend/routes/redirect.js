@@ -1,7 +1,5 @@
-const click = require('../model/click')
 const url = require('../model/url')
 const express = require("express")
-const parse = require('ua-parser')
 
 const router = express.Router()
 
@@ -13,23 +11,7 @@ router.get('/:shortUrl', async (req, res) => {
         const link = await url.findOne({ shortUrl: shortUrl })
         if(!link) return res.status(404).send("Url not found.")
 
-        const devices = await parse.parseDevice().toString()
-        const device = (devices === "Other") ? "Desktop" : devices
-
-        const response = await fetch("https://ipwho.is/");
-        const { city, country } = await response.json();
-
-        const clickdtls = new click({
-            device: device,
-            city: city,
-            country: country,
-            time: Date.now()
-        })
-
-        await clickdtls.save()
-        const clickId = clickdtls._id
-
-        link.clicks.push(clickId)
+        link.clicks.push({ time: Date.now() })
         await link.save()
         res.redirect(link.actualUrl)
     } catch (error) {

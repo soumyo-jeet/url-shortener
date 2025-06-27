@@ -56,7 +56,7 @@ router.post('/savedUrl', async (req, res) => {
     const { link } = await req.body
     if (!link) res.status(400).send("Bad request")
     try {
-        const savedUrl = await url.findOne({ actualUrl: link }).populate("clicks")
+        const savedUrl = await url.findOne({ actualUrl: link })
         if (!savedUrl) res.status(404).json("Not Found")
         res.status(200).json(savedUrl)
     } catch (error) {

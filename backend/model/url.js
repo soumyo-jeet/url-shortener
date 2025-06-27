@@ -23,8 +23,7 @@ const urlSchema = new Schema ({
     },
 
     clicks : [{
-        type: mongoose.SchemaTypes.ObjectId,
-        ref: 'Click'
+        time: Date
     }]
 })
 
